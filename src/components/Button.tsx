@@ -18,7 +18,7 @@ const Button:FC<ButtonProps> = ({
     ...props
 }) => {
   return (
-    <button className={`py-3 px-4 rounded-lg ${bgColor} ${textColor} ${className}`}
+    <button className={`py-3 px-4 bg-blue-400 hover:cursor-pointer hover:bg-blue-500  rounded-lg ${bgColor} ${textColor} ${className}`}
      {...props}
     >
       {children}
