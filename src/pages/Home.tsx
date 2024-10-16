@@ -1,10 +1,12 @@
 import React from 'react'
-import { FC } from 'react'
+import HomePage from '../features/home/HomePage'
 
 
-const Home:FC = () => {
+const Home:React.FC = () => {
   return (
-    <div>Home</div>
+    <div className=''>
+        <HomePage/>
+    </div>
   )
 }
 

@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
 
         {/* Navigation Links */}
         <nav className='hidden md:flex space-x-4 md:space-x-6 text-sm lg:text-lg font-satoshi'>
-          <Link to="/">Shop</Link> 
+          <Link to="/shop">Shop</Link> 
           <Link to="/on-sale">On Sale</Link>
           <Link to="/new-arrival">New Arrival</Link>
           <Link to="/brands">Brands</Link>
@@ -29,14 +29,15 @@ const Navbar: React.FC = () => {
             className="ml-2 flex-grow bg-transparent border-none placeholder-gray-400 focus:outline-none focus:ring-0"
           />
         </div>
-
+        <div className='space-x-2 md:space-x-4 pr-6'>
         {/* Shopping Cart and Profile Buttons */}
-        <Button className='bg-transparent' aria-label="Shopping Cart">
+        <Button bgColor="bg-black"  >
           <LuShoppingCart />
         </Button>
-        <Button className="font-semibold bg-transparent" aria-label="Profile">
+        <button className="font-semibold bg-transparent" aria-label="Profile">
           <CgProfile />
-        </Button>
+        </button>
+        </div>
       </div>
     </header>
   );

@@ -1,29 +1,30 @@
-import React from 'react'
-import { ButtonHTMLAttributes,FC } from 'react'
+import React, { ButtonHTMLAttributes, FC } from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
-  children:React.ReactNode;
-  type?:'button' | 'submit' | 'reset';
-  bgColor?:string;
-  textColor?:string;
-  className?:string;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  bgColor?: string; // Custom prop
+  textColor?: string; // Custom prop
+  className?: string; // Additional className
 }
 
-const Button:FC<ButtonProps> = ({
-    children,
-    type='button',
-    bgColor="bg-blue-500",
-    textColor="white",
-    className='',
-    ...props
+const Button: FC<ButtonProps> = ({
+  children,
+  type = 'button',
+  bgColor = 'bg-blue-600', // Default background color
+  textColor = 'text-white', // Default text color
+  className = '',
+  ...props
 }) => {
+  // These custom props won't be passed to the native button element
   return (
-    <button className={`py-3 px-4 bg-blue-400 hover:cursor-pointer hover:bg-blue-500  rounded-lg ${bgColor} ${textColor} ${className}`}
-     {...props}
+    <button
+      type={type}
+      className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`}
+      {...props}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

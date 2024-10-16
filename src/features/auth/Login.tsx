@@ -61,7 +61,7 @@ const Login: React.FC = () => {
           <button
             type="button"  // Prevent form submission when clicking the visibility toggle
             onClick={togglePasswordVisibility}
-            className="absolute top-1/2 transform -translate-y-1/2 right-2 text-gray-500"
+            className="absolute top-1/2 transform -translate-y-0.1 right-2 text-gray-500"
           >
             {passwordVisible ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
           </button>
