@@ -9,15 +9,16 @@ import Home from './pages/Home';
 import Login from './features/auth/Login';
 import Register from './features/auth/Register';
 import Footer from './components/Footer';
+import ProductDetail from './features/product/ProductDetails';
+import Cart from './features/cart/Cart';
 
-
-function App() {
+const App:React.FC=()=> {
   
 
   return (
     <Router>
       <Navbar/>
-      <main className="p-6">
+      <main className="p-6 dark:bg-gray-950 dark:text-white">
     <Routes>
        <Route path="/" element={<Home />} /> 
       <Route path='/shop' element={<Shop/>}/>
@@ -27,8 +28,12 @@ function App() {
 
       <Route path="/register" element={<Register/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/productdetail' element={<ProductDetail/>}/>
+
+      <Route path='/yourcart' element={<Cart/>}/>
     </Routes>
     </main>
+    
     <Footer/>
     </Router>
   )

@@ -8,7 +8,7 @@ const Footer = () => {
           
           {/* Left Section */}
           <div className="mb-8 md:mb-0">
-            <h2 className="text-xl font-bold">SHOP.CO</h2>
+            <h2 className="text-xl font-bold">HamroSewa</h2>
             <p className="text-gray-500 mt-2">
               We have clothes that suit your style and which you're proud to wear. From women to men.
             </p>

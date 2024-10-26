@@ -2,24 +2,23 @@ import React, { ButtonHTMLAttributes, FC } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  bgColor?: string; // Custom prop
-  textColor?: string; // Custom prop
-  className?: string; // Additional className
+  bgColor?: string; 
+  textColor?: string; 
+  className?: string; 
 }
 
 const Button: FC<ButtonProps> = ({
   children,
   type = 'button',
-  bgColor = 'bg-blue-600', // Default background color
-  textColor = 'text-white', // Default text color
+  bgColor = 'bg-blue-600',
+  textColor = 'text-white', 
   className = '',
   ...props
 }) => {
-  // These custom props won't be passed to the native button element
   return (
     <button
       type={type}
-      className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`}
+      className={`px-4 py-2  rounded-full ${bgColor} ${textColor} ${className}`}
       {...props}
     >
       {children}

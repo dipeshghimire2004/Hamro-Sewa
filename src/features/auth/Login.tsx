@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, replace } from 'react-router-dom';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { Input, Button } from '../../components/index';  // Assuming you have Input and Button components
+import axios from 'axios';
+import toast,{Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from '@reduxjs/toolkit';
+import { useDispatch, UseDispatch } from 'react-redux';
+import {login} from './authSlice'
 
 type FormInputs = {
   email: string;
@@ -11,6 +17,8 @@ type FormInputs = {
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
@@ -19,14 +27,41 @@ const Login: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormInputs> =async (data) => {
+    const {email, password}=data;
+    try {
+      const response= await axios.post('https://shop-co-backend-nine.vercel.app/api/auth/login',{
+        email,
+        password,
+      },{
+        headers:{
+          'Content-type':'application/json'
+        }
+      })
+      console.log(response.data)
+      if(response.status==200){
+        
+        toast.success("Login successfully!!")
+        dispatch(login(response.data))
+        setTimeout(()=>{
+          navigate('/', {replace:true})
+        })
+      }
+    } catch (error) {
+      if(axios.isAxiosError(error)){
+        toast.error(error.response?.data?.message || " Network Connection, Please try again!");
+      }
+      else{
+        toast.error("An unexpected error occurred");
+      }
+    }
     // Add logic to handle login here, e.g., call an API
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <Toaster/>
+      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
 
         {/* Email Input */}
@@ -58,13 +93,15 @@ const Login: React.FC = () => {
             {...register('password', { required: 'Password is required' })}
             className="border border-gray-300 rounded-md w-full p-2 pr-10"
           />
-          <button
+          <Button
             type="button"  // Prevent form submission when clicking the visibility toggle
             onClick={togglePasswordVisibility}
-            className="absolute top-1/2 transform -translate-y-0.1 right-2 text-gray-500"
+            bgColor='transparent'
+            textColor=''
+            className="absolute top-1/2 transform -translate-y-0.7 right-2 text-gray-500"
           >
             {passwordVisible ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-          </button>
+          </Button>
           {errors.password && <span className="text-red-500">{errors.password.message}</span>}
         </div>
 
