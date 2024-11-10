@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input, Button } from '../../components/index'
 import { Link } from 'react-router-dom'
@@ -6,24 +6,19 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import axios from 'axios';
 import toast,{Toaster} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
-import {login} from './authSlice'
-import { useDispatch, UseDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
 
 const Register: React.FC = () => {
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
-    // const [data, setData]=useState([]);
     const [isSubmitting, setIsSubmitting]=useState(false)
     const Navigate=useNavigate();
-    const dispatch=useDispatch();
+    
 
-    // Toggle password visibility for the password field
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
-
-    // Toggle password visibility for the confirm password field
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!confirmPasswordVisible);
     };
@@ -43,15 +38,17 @@ const Register: React.FC = () => {
 
     // console.log('Form Data:', { name, username, email, phone, password }); 
     const onSubmit: SubmitHandler<FormInputs> =async (data) => {
-        const {email,username, phone,password} =data;
+        // const {email,username, phone,password} =data;
         try {
             const response =  await axios.post('https://shop-co-backend-nine.vercel.app/api/auth/register',
-                {
-                phone,
-                username,
-                email,
-                password,
-            },{
+                JSON.stringify(data)
+            //     {
+            //     phone,
+            //     username,
+            //     email,
+            //     password,
+            // }
+            ,{
                 headers:{
                     'Content-Type':'application/json',
                 },

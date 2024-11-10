@@ -1,4 +1,6 @@
-
+import tshirt1 from '../assets/images/tshirt1.svg';
+import tshirt2 from '../assets/images/tshirt2.svg';
+import tshirt3 from '../assets/images/tshirt3.svg';
 
 export const cartItems = [
     {
@@ -7,7 +9,7 @@ export const cartItems = [
       size: "Large",
       color: "White",
       price: 145,
-      imageUrl: "https://via.placeholder.com/100",
+      imageUrl: tshirt1,
       quantity: 1,
     },
     {
@@ -16,7 +18,7 @@ export const cartItems = [
       size: "Medium",
       color: "Red",
       price: 180,
-      imageUrl: "https://via.placeholder.com/100",
+      imageUrl: tshirt2,
       quantity: 1,
     },
     {
@@ -25,7 +27,7 @@ export const cartItems = [
       size: "Large",
       color: "Blue",
       price: 240,
-      imageUrl: "https://via.placeholder.com/100",
+      imageUrl:tshirt3,
       quantity: 1,
     },
   ];

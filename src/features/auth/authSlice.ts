@@ -12,13 +12,13 @@ export interface UserData{
 export interface authState{
     userData:UserData | null;
     status:boolean;
-    token:String | null;
+    accessToken:string | null;
 }
 
 const initialState:authState={
     userData:null,
     status:false,
-    token:null,
+    accessToken:null,
 }
 
 export const authSlice=createSlice({
@@ -26,15 +26,15 @@ export const authSlice=createSlice({
         name:'auth',
         initialState,
         reducers:{
-            login:(state,action:PayloadAction<{userData:UserData; token:string}>)=>{
-                state.userData=action.payload.userData
-                state.status=true,
-                state.token=action.payload.token
+            login:(state,action:PayloadAction<{userData:UserData; accessToken:string}>)=>{
+                state.userData=action.payload.userData;
+                state.status=true;
+                state.accessToken=action.payload.accessToken;
             },
             logout:(state)=>{
-                state.userData=null,
-                state.status=false,
-                state.token=null
+                state.userData=null;
+                state.status=false;
+                state.accessToken=null
             },
             updateUserData:(state, action:PayloadAction<Partial<UserData>>)=>{
                 if(state.userData){

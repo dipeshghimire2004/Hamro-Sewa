@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button } from '../index';
+import { Input} from '../index';
 import { LuShoppingCart } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import { IoSearchOutline } from "react-icons/io5";
@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <header className='w-full max-w-[1240px] min-w-[390px] flex items-center bg-white mt-4 lg:mt-4 lg:mx-24 '>
+    <header className='w-full max-w-[1240px] min-w-[390px] flex items-center bg-white mt-4 lg:mt-4 lg:mx-24 pb-4 border-b border-gray-300 '>
       <div className=' shadow-lg  '>
         <button onClick={toggleDarkMode}>{isDarkMode? "🌙" : "🔆"}</button>
 
@@ -37,7 +37,18 @@ const Navbar: React.FC = () => {
               {isMenuOpen ? <HiX /> : < IoMenu  />}
             </button>
           </div>
-
+              {/* Mobile Menu Links */}
+          {isMenuOpen && (
+            <nav className='md:hidden bg-white absolute top-16 w-full shadow-md'>
+              <ul onClick={() => setIsMenuOpen(false)} className='flex flex-col  space-y-4 p-4'>
+                <li><Link to="/shop" >Shop</Link></li>
+                <li><Link to="/on-sale" >On Sale</Link></li>
+                <li><Link to="/new-arrival" >New Arrival</Link></li>
+                <li><Link to="/brands" >Brands</Link></li>
+                {/* <li><button onClick={toggleDarkMode}>{isDarkMode?"🌙":"🔆"}</button></li> */}
+              </ul>
+            </nav>
+          )}
           {/* Brand Name */}
           <div className='text-2xl font-bold'><Link to='/'>HamroSewa</Link></div>
         </div>
@@ -70,9 +81,9 @@ const Navbar: React.FC = () => {
 
           {/* Cart and Profile Icons */}
           <div className='flex space-x-2 md:space-x-4 pr-6'>
-            <button className='bg-transparent' aria-label="Shopping Cart">
+            <Link to='/yourcart' className='bg-transparent' aria-label="Shopping Cart">
               <LuShoppingCart />
-            </button>
+            </Link>
             <button className="font-semibold bg-transparent" aria-label="Profile">
               <CgProfile />
             </button>
@@ -80,18 +91,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Links */}
-      {isMenuOpen && (
-        <nav className='md:hidden bg-white shadow-md'>
-          <ul className='flex flex-col space-y-4 p-4'>
-            <li><Link to="/shop" onClick={() => setIsMenuOpen(false)}>Shop</Link></li>
-            <li><Link to="/on-sale" onClick={() => setIsMenuOpen(false)}>On Sale</Link></li>
-            <li><Link to="/new-arrival" onClick={() => setIsMenuOpen(false)}>New Arrival</Link></li>
-            <li><Link to="/brands" onClick={() => setIsMenuOpen(false)}>Brands</Link></li>
-            <li><button onClick={toggleDarkMode}>{isDarkMode?"🌙":"🔆"}</button></li>
-          </ul>
-        </nav>
-      )}
+      
     </header>
   );
 }

@@ -47,12 +47,13 @@ const HomePage: React.FC = () => {
             Browse through our diverse range of meticulously crafted garments, 
             designed to bring out your individuality and cater to your sense of style.
           </p>
-          <button
+          <Button
             type="button"
-            className="bg-black sm:w-full md:w-[210px] h-12 hover:bg-white hover:text-black duration-300 transition-all px-10 py-3 text-white text-lg rounded-full shadow-lg"
+            bgColor='bg-black'
+            className="sm:w-full md:w-[210px] h-12 hover:bg-white hover:text-black duration-300 transition-all px-10 py-3 text-white text-lg rounded-full shadow-lg"
           >
             Shop Now
-          </button>
+          </Button>
         </div>
 
         {/* Statistics Section */}

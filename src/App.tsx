@@ -11,6 +11,7 @@ import Register from './features/auth/Register';
 import Footer from './components/Footer';
 import ProductDetail from './features/product/ProductDetails';
 import Cart from './features/cart/Cart';
+import Product from './pages/Product';
 
 const App:React.FC=()=> {
   
@@ -31,6 +32,8 @@ const App:React.FC=()=> {
       <Route path='/productdetail' element={<ProductDetail/>}/>
 
       <Route path='/yourcart' element={<Cart/>}/>
+
+      <Route path='/productform' element={<Product/>}/>
     </Routes>
     </main>
     

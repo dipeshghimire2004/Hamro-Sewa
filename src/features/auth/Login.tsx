@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 // import { useDispatch } from '@reduxjs/toolkit';
 import { useDispatch, UseDispatch } from 'react-redux';
 import {login} from './authSlice'
+import Cookies from 'js-cookie'
+import Breadcrumb from '../../components/Breadcrumb';
 
 type FormInputs = {
   email: string;
@@ -27,25 +29,31 @@ const Login: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
 
-  const onSubmit: SubmitHandler<FormInputs> =async (data) => {
-    const {email, password}=data;
+  const onSubmit: SubmitHandler<FormInputs> =async (data:FormInputs) => {
+    // const {email, password}=data;
     try {
-      const response= await axios.post('https://shop-co-backend-nine.vercel.app/api/auth/login',{
-        email,
-        password,
-      },{
+      const response= await axios.post('https://shop-co-backend-nine.vercel.app/api/auth/login',
+        data,{
         headers:{
           'Content-type':'application/json'
-        }
-      })
+        },
+        // withCredentials:true,
+      },)
       console.log(response.data)
-      if(response.status==200){
-        
+      // if(response.status==200){
+        if(response.data){
+          console.log(response.data.data)
+        const token=response.data?.data.token;
+        if(token){
+          Cookies.set('access', token, {expires:7, sameSite:'Lax',})
+          console.log('Token set in cookies:', token);
+        }
         toast.success("Login successfully!!")
-        dispatch(login(response.data))
-        setTimeout(()=>{
-          navigate('/', {replace:true})
-        })
+          dispatch(login(response.data))
+          setTimeout(()=>{
+            navigate('/', {replace:true})
+          })
+       
       }
     } catch (error) {
       if(axios.isAxiosError(error)){
@@ -59,69 +67,74 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Toaster/>
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
+    <div>
+        <Breadcrumb/>
+          <div className="flex justify-center items-center max-h-screen">
+          
+          <Toaster/>
+          <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
 
-        {/* Email Input */}
-        <div className="mb-4">
-          <Input
-            label="Email"
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/,
-                message: 'Please enter a valid email',
-              },
-            })}
-            className="border border-gray-300 rounded-md w-full p-2"
-          />
-          {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-        </div>
+            {/* Email Input */}
+            <div className="mb-4">
+              <Input
+                label="Email"
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/,
+                    message: 'Please enter a valid email',
+                  },
+                })}
+                className="border border-gray-300 rounded-md w-full p-2"
+              />
+              {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+            </div>
 
-        {/* Password Input */}
-        <div className="mb-4 relative">
-          <Input
-            label="Password"
-            id="password"
-            type={passwordVisible ? 'text' : 'password'}
-            placeholder="Enter your password"
-            {...register('password', { required: 'Password is required' })}
-            className="border border-gray-300 rounded-md w-full p-2 pr-10"
-          />
-          <Button
-            type="button"  // Prevent form submission when clicking the visibility toggle
-            onClick={togglePasswordVisibility}
-            bgColor='transparent'
-            textColor=''
-            className="absolute top-1/2 transform -translate-y-0.7 right-2 text-gray-500"
-          >
-            {passwordVisible ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-          </Button>
-          {errors.password && <span className="text-red-500">{errors.password.message}</span>}
-        </div>
+            {/* Password Input */}
+            <div className="mb-4 relative">
+              <Input
+                label="Password"
+                id="password"
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Enter your password"
+                {...register('password', { required: 'Password is required' })}
+                className="border border-gray-300 rounded-md w-full p-2 pr-10"
+              />
+              <Button
+                type="button"  // Prevent form submission when clicking the visibility toggle
+                onClick={togglePasswordVisibility}
+                bgColor='transparent'
+                textColor=''
+                className="absolute top-1/2 transform -translate-y-0.7 right-2 text-gray-500"
+              >
+                {passwordVisible ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+              </Button>
+              {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+            </div>
 
-        {/* Submit Button */}
-        <div className="mb-6">
-          <Button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
-          >
-            Login
-          </Button>
-        </div>
+            {/* Submit Button */}
+            <div className="mb-6">
+              <Button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+              >
+                Login
+              </Button>
+            </div>
 
-        {/* Link to Register */}
-        <div className="flex justify-center items-center">
-          <p className="mr-2">Don't have an account?</p>
-          <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
+            {/* Link to Register */}
+            <div className="flex justify-center items-center">
+              <p className="mr-2">Don't have an account?</p>
+              <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
+            </div>
+          </form>
         </div>
-      </form>
     </div>
+    
   );
 };
 

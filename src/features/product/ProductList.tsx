@@ -18,7 +18,7 @@ const ProductList:React.FC=()=>{
                         key={index}
                         name={product.name}
                         markedPrice={product.markedPrice}
-                        description={product.description}
+                        // description={product.description}
                         imageUrl={product.imageUrl}
                         discount={product.discount}
                         sellingPrice={product.sellingPrice}
