@@ -1,7 +1,7 @@
-import react, { useState } from 'react'
+import { useState } from 'react'
 import products from '../../utils/products'
 import ProductCard from '../../components/ProductCard'
-
+import { Link } from 'react-router-dom'
 
 
 const ProductList:React.FC=()=>{
@@ -12,19 +12,26 @@ const ProductList:React.FC=()=>{
     return(
         <div className='w-full  '>
             <h1 className='flex justify-center items-center font-bold text-4xl'>NEW ARRIVALS</h1>
-            <div className='flex mx-4 mt-4 grid grid-cols-2 lg:grid-cols-4'>
+            <div  className=' mx-4 mt-4 grid grid-cols-2 lg:grid-cols-4'>
                 {displayAll.map((product, index)=>(
-                    <ProductCard
-                        key={index}
-                        name={product.name}
-                        markedPrice={product.markedPrice}
-                        // description={product.description}
-                        imageUrl={product.imageUrl}
-                        discount={product.discount}
-                        sellingPrice={product.sellingPrice}
-                        rating={product.rating}
-                    />
+                    <div key={product.id} className='product-card'>
+                        <Link to={`/product/${product.id}`}>                        
+                            <ProductCard
+                                key={index}
+                                name={product.name}
+                                markedPrice={product.markedPrice}
+                                // description={product.description}
+                                imageUrl={product.imageUrl}
+                                discount={product.discount}
+                                sellingPrice={product.sellingPrice}
+                                rating={product.rating}
+                            />
+                        </Link>
+                    </div>
+                    
+                    
                 ))}
+               
             </div>
             <div className='flex justify-center'>
                 

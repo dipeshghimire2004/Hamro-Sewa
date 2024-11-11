@@ -29,7 +29,7 @@ const App:React.FC=()=> {
 
       <Route path="/register" element={<Register/>}/>
       <Route path='/login' element={<Login/>}/>
-      <Route path='/productdetail' element={<ProductDetail/>}/>
+      <Route path='/product/:id' element={<ProductDetail/>}/>
 
       <Route path='/yourcart' element={<Cart/>}/>
 

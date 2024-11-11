@@ -20,11 +20,8 @@ const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <header className='w-full max-w-[1240px] min-w-[390px] flex items-center bg-white mt-4 lg:mt-4 lg:mx-24 pb-4 border-b border-gray-300 '>
-      <div className=' shadow-lg  '>
-        <button onClick={toggleDarkMode}>{isDarkMode? "🌙" : "🔆"}</button>
-
-      </div>
+    <header className='w-full max-w-[1340px] min-w-[390px] flex items-center bg-white mt-4 lg:mt-6 lg:mx-24 pb-4  '>
+     
       <div className='container h-12  space-x-2 lg:space-x-10 py-4 flex justify-between items-center'>
         {/* Mobile Menu Icon */}
         <div className='flex  space-x-2'>
@@ -62,7 +59,9 @@ const Navbar: React.FC = () => {
 
         {/* Search Bar */}
         <div className={`flex items-center flex-grow space-x-2 md:space-x-4 px-4 border border-stone-300 bg-gray-50/30 rounded-full ${isSearchOpen ? 'flex' : 'hidden'} md:flex`}>
-          <IoSearchOutline aria-label="Search Icon" />
+          <button>
+            <IoSearchOutline aria-label="Search Icon" />  
+          </button>
           <Input
             type="text"
             placeholder='Search For Products'
@@ -72,7 +71,7 @@ const Navbar: React.FC = () => {
         <div className='flex space-x-4'>
           {/* Search Button for Mobile */}
           <button 
-            className={` md:hidden ${isSearchOpen ? 'hidden' : 'flex'}`} 
+            className={`cursor-pointer  md:hidden ${isSearchOpen ? 'hidden' : 'flex'}`} 
             onClick={() => setIsSearchOpen(true)} 
             aria-label="Expand Search"
           >
@@ -80,7 +79,7 @@ const Navbar: React.FC = () => {
           </button>
 
           {/* Cart and Profile Icons */}
-          <div className='flex space-x-2 md:space-x-4 pr-6'>
+          <div className='flex space-x-2 md:space-x-4 pr-6 ml-2'>
             <Link to='/yourcart' className='bg-transparent' aria-label="Shopping Cart">
               <LuShoppingCart />
             </Link>
@@ -88,6 +87,10 @@ const Navbar: React.FC = () => {
               <CgProfile />
             </button>
           </div>
+          <div className=' shadow-lg  '>
+        <button onClick={toggleDarkMode}>{isDarkMode? "🌙" : "🔆"}</button>
+
+      </div>
         </div>
       </div>
 

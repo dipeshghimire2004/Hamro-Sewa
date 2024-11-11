@@ -1,49 +1,29 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
-import ProductDetails from '../../utils/productdetail';
 import { Button } from '../../components';
 import { IoCheckmarkSharp } from 'react-icons/io5';
-import productReviews from '../../utils/productReviews';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { HiDotsHorizontal } from 'react-icons/hi';
+import productReviews from '../../utils/productReviews';
+import { ProductDetailType } from '@/features/product/ProductItemType';
 
 interface ProductDetailProps {
-  imageUrls: string[];
-  name: string;
-  description: string;
-  markedPrice: number;
-  sellingPrice: number;
-  discount: number;
-  rating: number;
-  availableColors: string[];
-  availableSizes: string[];
+  product: ProductDetailType;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
-  imageUrls = [],
-  name,
-  description,
-  markedPrice,
-  sellingPrice,
-  discount,
-  rating,
-  availableColors = [],
-  availableSizes = [],
+  product
 }) => {
   const [reviews, setReviews] = useState(productReviews);
   const [selectedImage, setSelectedImage] = useState(
-    imageUrls.length > 0 ? imageUrls[0] : ''
-  );
-  const [selectedColor, setSelectedColor] = useState(
-    availableColors.length > 0 ? availableColors[0] : ''
+    product.image_url.length > 0 ? product.image_url : ''
   );
   const [selectedSize, setSelectedSize] = useState(
-    availableSizes.length > 0 ? availableSizes[0] : ''
+    product.sizes.length > 0 ? product.sizes.split(',')[0] : ''
   );
   const [quantity, setQuantity] = useState(1);
 
-  const product = ProductDetails[0];
-  const displayReviews = reviews ? reviews : productReviews.slice(0, 6);
+  const displayReviews = reviews.length ? reviews : productReviews.slice(0, 6);
 
   // Handle quantity increment and decrement
   const handleQuantityChange = (type: string) => {
@@ -59,14 +39,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
         <div className="w-full lg:w-1/2 flex flex-col lg:flex-row space-x-4">
           <div className="w-full h-44 mt-4 lg:w-40">
             <div className="flex justify-between items-center lg:h-[530px] md:flex-col lg:ml-2">
-              {imageUrls.length > 0 ? (
-                imageUrls.map((image, index) => (
-                  <div className="h-[167px] lg:space-y-[18px] m-2" key={index}>
-                    <button onClick={() => setSelectedImage(image)}>
-                      <img src={image} alt={name} />
-                    </button>
-                  </div>
-                ))
+              {product.image_url.length > 0 ? (
+                <div className="h-[167px] lg:space-y-[18px] m-2">
+                  <button onClick={() => setSelectedImage(product.image_url)}>
+                    <img src={product.image_url} alt={product.name} />
+                  </button>
+                </div>
               ) : (
                 <p>No Images available</p>
               )}
@@ -76,14 +54,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
             <img
               src={selectedImage}
               className="h-full w-full object-cover"
-              alt={name}
+              alt={product.name}
             />
           </div>
         </div>
 
         {/* Product Details Section */}
         <div className="w-full lg:w-1/2 p-6">
-          <h1>{name}</h1>
+          <h1>{product.name}</h1>
           <div className="flex items-center space-x-2">
             <div className="flex">
               {Array(5)
@@ -91,52 +69,38 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                 .map((_, index) => (
                   <span
                     key={index}
-                    className={
-                      index < rating ? 'text-yellow-300' : 'text-gray-300'
-                    }
+                    className={index < product.rating ? 'text-yellow-300' : 'text-gray-300'}
                   >
                     <FaStar />
                   </span>
                 ))}
             </div>
-            <div>{rating}</div>
+            <div>{product.rating}</div>
           </div>
 
           {/* Prices and Discount */}
           <div className="mt-4 flex space-x-3">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-bold text-gray-900">
-                ${sellingPrice?.toFixed(2)}
+                ${product.discounted_price.toFixed(2)}
               </span>
-              <span className="text-gray-500 line-through">
-                ${markedPrice?.toFixed(2)}
-              </span>
+              {product.discount > 0 && (
+                <span className="text-gray-500 line-through">
+                  ${product.price.toFixed(2)}
+                </span>
+              )}
             </div>
-            <div className="text-sm px-3 flex items-center rounded-full bg-red-100 text-red-500 font-semibold">
-              {discount}%
-            </div>
+            {product.discount > 0 && (
+              <div className="text-sm px-3 flex items-center rounded-full bg-red-100 text-red-500 font-semibold">
+                {product.discount}%
+              </div>
+            )}
           </div>
-          <p className="text-gray-400">{description}</p>
-
-          {/* Available Colors */}
-          <div className="space-x-2 border-t mt-4 border-stone-300 pt-2">
-            {availableColors.map((color, index) => (
-              <button
-                key={index}
-                className="w-8 h-8 rounded-full relative"
-                style={{ backgroundColor: color }}
-                onClick={() => setSelectedColor(color)}
-              >
-                {color === selectedColor && (
-                  <IoCheckmarkSharp className="absolute inset-0 m-auto text-white" />
-                )}
-              </button>
-            ))}
-          </div>
+          <p className="text-gray-400">{product.description}</p>
 
           {/* Available Sizes */}
           <div className="space-x-2 border-t mt-4 border-stone-300 pt-2">
-            {availableSizes.map((size, index) => (
+            {product.sizes.split(',').map((size, index) => (
               <button
                 key={index}
                 className={`px-8 py-2 rounded-full ${
@@ -207,9 +171,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                     .map((_, index) => (
                       <span
                         key={index}
-                        className={
-                          index < review.rating ? 'text-yellow-300' : 'text-gray-300'
-                        }
+                        className={index < review.rating ? 'text-yellow-300' : 'text-gray-300'}
                       >
                         <FaStar />
                       </span>

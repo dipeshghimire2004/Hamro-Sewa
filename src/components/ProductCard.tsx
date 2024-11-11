@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
         {/* <Link to={`/productdetail/${id}`}>View Details</Link> */}
 
-        <Link to='/productdetail'>View Details</Link>
+        
         {/* Add to Cart Button */}
         {/* <button className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out">
           Add to Cart
