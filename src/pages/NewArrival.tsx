@@ -4,7 +4,7 @@ import axios, { isAxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 import ProductCard from '../components/ProductCard';
-import { ProductType } from '../features/product/ProductItemType';
+import { ProductListType } from '../features/product/ProductItemType';
 import { useNavigate } from 'react-router-dom';
 
 // interface NewArrivalProduct {
@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NewArrival: FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [products, setProducts] = useState<ProductListType[]>([]);
   const [showAllProducts, setShowAllProducts] = useState(false);
   const navigate = useNavigate();  
 
@@ -41,8 +41,16 @@ const NewArrival: FC = () => {
             'Content-Type': 'application/json',
           },
         });
-
-        setProducts(response.data.data);
+        const formattedProducts = response.data.data.map((product: any) => ({
+          id: product.id,
+          name: product.name || 'Unnamed Product',
+          image_url: product.image_url || '/default-image.jpg', // Fallback for missing image
+          price: parseFloat(product.price) || 0, // Ensure it's a number
+          discounted_price: parseFloat(product.discounted_price) || 0,
+          discount: product.discount || Math.max(0, 100 - Math.round((product.discounted_price / product.price) * 100)), // Calculate if missing
+          rating: Math.min(Math.max(product.rating || 0, 0), 5), // Clamp rating between 0 and 5
+        }));
+        setProducts(formattedProducts);
       } catch (error) {
         if (isAxiosError(error)) {
           const errMsg = error.response?.data?.message || 'Failed to fetch new arrivals';
@@ -73,10 +81,10 @@ const NewArrival: FC = () => {
           <ProductCard
             key={product.id}
             name={product.name}
-            markedPrice={product.price}
-            imageUrl={product.image_url}
+            price={product.price}
+            image_url={product.image_url}
             discount={product.discount}
-            sellingPrice={product.discounted_price}
+            discounted_price={product.discounted_price}
             rating={product.rating}
           />
         ))}
@@ -84,7 +92,7 @@ const NewArrival: FC = () => {
       <div className="flex justify-center">
         <button
           onClick={() => setShowAllProducts(!showAllProducts)}
-          className="bg-transparent hover:bg-gray-100 border border-stone-200 rounded-full py-1 px-6 transition-all font-satoshi"
+          className="w-[218px] h-[52px] bg-transparent mt-9 hover:bg-gray-100 border border-stone-200 rounded-full py-1 px-6 transition-all font-satoshi"
         >
           {showAllProducts ? 'Show less' : 'View All'}
         </button>

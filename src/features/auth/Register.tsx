@@ -38,16 +38,16 @@ const Register: React.FC = () => {
 
     // console.log('Form Data:', { name, username, email, phone, password }); 
     const onSubmit: SubmitHandler<FormInputs> =async (data) => {
-        // const {email,username, phone,password} =data;
+        const {email,username, phone,password} =data;
         try {
             const response =  await axios.post('https://shop-co-backend-nine.vercel.app/api/auth/register',
-                JSON.stringify(data)
-            //     {
-            //     phone,
-            //     username,
-            //     email,
-            //     password,
-            // }
+                // JSON.stringify(data)
+                {
+                phone,
+                username,
+                email,
+                password,
+            }
             ,{
                 headers:{
                     'Content-Type':'application/json',

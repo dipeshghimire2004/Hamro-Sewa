@@ -7,11 +7,11 @@ import gym from '../../assets/images/gymmain.png'
 
 const DressStyle = () => {
   return (
-    <div>
-        <div className=' bg-gray-300 rounded-xl max-h-[866px] max-w-[1239px] '>
-            <h1 className='pt-24 font-bold text-4xl text-center '>BROWSE BY DRESS STYLE</h1>
-            <div className='space-y-1 mx-20 pb-20'>
-                <div className='flex gap-2'>
+    <div className='flex justify-center mt-20'>
+        <div className=' bg-[#F0F0F0] rounded-xl max-h-[866px] max-w-[1239px] '>
+            <h1 className='pt-24 pb-20 font-extrabold text-[48px] text-black text-center '>BROWSE BY DRESS STYLE</h1>
+            <div className='space-y-5 mx-20 pb-20'>
+                <div className='flex gap-5'>
                     <div className='max-h-[289px]'>
                         <img src={casual} alt="casual"  className='rounded-xl object-cover overflow-hidden ' />
                     </div>
@@ -20,7 +20,7 @@ const DressStyle = () => {
                     </div>
                 </div>
 
-                <div className='flex gap-2 '>
+                <div className='flex gap-5 '>
                     <div className='max-h-[289px]'>
                         <img src={party} alt="party"  className='rounded-xl object-cover overflow-hidden '/>
                     </div>

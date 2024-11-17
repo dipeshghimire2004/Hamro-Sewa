@@ -1,34 +1,35 @@
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   id?:number;
-  imageUrl: string;
+  image_url: string;
   name: string;
   // description: string;
-  markedPrice: number; // Original Price (before discount)
-  sellingPrice: number; // Discounted Price
+  price: number; // Original Price (before discount)
+  discounted_price: number; // Discounted Price
   discount: number; // Discount Percentage
   rating: number; // Rating out of 5
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  imageUrl,
+  // id,
+  image_url,
   name,
   // description,
-  markedPrice,
-  sellingPrice,
-  discount,
-  rating
+  price=0,
+  discounted_price=0,
+  discount=0,
+  rating=0
 }) => {
+  const formattedPrice = price.toFixed(2);
+  const formattedDiscountedPrice = discounted_price.toFixed(2);
   return (
     <div className="max-w-xs  bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out m-4">
       
       <img
         className="w-full h-72 object-cover rounded-t-lg"
-        src={imageUrl}
+        src={image_url}
         alt={name}
       />
       <div className="p-4">
@@ -59,8 +60,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Prices and Discount */}
         <div className="mt-2 flex space-x-3">
           <div className="flex items-center space-x-2">
-            <span className="text-lg font-bold text-gray-900">${sellingPrice?.toFixed(2)}</span>
-            <span className="text-gray-500 line-through">${markedPrice?.toFixed(2)}</span>
+            <span className="text-lg font-bold text-gray-900">${formattedDiscountedPrice}</span>
+            <span className="text-gray-500 line-through">${formattedPrice}</span>
           </div>
           <div className="text-sm inline-block px-3  flex items-center rounded-full bg-red-100 text-red-500 font-semibold">{discount}%</div>
         </div>
