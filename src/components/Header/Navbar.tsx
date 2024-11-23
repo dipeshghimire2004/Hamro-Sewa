@@ -4,9 +4,10 @@ import { LuShoppingCart } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
-import { HiX } from "react-icons/hi"; // Icons for menu open/close
+import { HiX } from "react-icons/hi"; 
 import { IoMenu } from "react-icons/io5";
 import useDarkMode from '../../hooks/useDarkMode';
+import {Button} from '../index';
 
 
 const Navbar: React.FC = () => {
@@ -16,9 +17,12 @@ const Navbar: React.FC = () => {
 
   // State for mobile menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // State for search bar expansion in mobile view
+  const [isProfielOpen, setIsProfileOpen] =useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const toggleProfile=()=>{
+    setIsProfileOpen(!isProfielOpen);
+  }
   return (
     <header className='w-full max-w-[1340px] min-w-[390px] flex items-center bg-white mt-4 lg:mt-6 lg:mx-24 pb-4  '>
      
@@ -83,9 +87,23 @@ const Navbar: React.FC = () => {
             <Link to='/yourcart' className='bg-transparent' aria-label="Shopping Cart">
               <LuShoppingCart />
             </Link>
-            <button className="font-semibold bg-transparent" aria-label="Profile">
-              <CgProfile />
-            </button>
+            <div className='relative'>
+              <button onClick={toggleProfile} className="font-semibold transistion duration-700" aria-label="Profile">
+                <CgProfile />
+              </button>
+              {isProfielOpen && (
+              
+              <div className='absolute flex justify-center left-1/2 transform -translate-x-1/2 right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-lg'>
+                <ul onClick={toggleProfile} >
+                  <li className='py-2 px-6  hover:shadow-xl cursor-pointer'><Link to='/profile'>Profile</Link></li>
+                  <li className='py-2 px-6  hover:shadow-xl cursor-pointer'><Link to='productform'>Add Product</Link></li>
+                  <li className='py-2 px-6  hover:shadow-xl cursor-pointer'><Link to='yourcart'>Your cart</Link></li>
+                  <li className='py-2 px-6  hover:text-red-600 cursor-pointer'><Link>Log out</Link></li>
+                </ul>
+              </div>
+
+             ) }
+            </div>
           </div>
           <div className=' shadow-lg  '>
         <button onClick={toggleDarkMode}>{isDarkMode? "🌙" : "🔆"}</button>

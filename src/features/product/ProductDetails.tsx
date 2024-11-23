@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Button } from '../../components';
 import { IoCheckmarkSharp } from 'react-icons/io5';
@@ -6,6 +6,22 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import productReviews from '../../utils/productReviews';
 import { ProductDetailType } from '@/features/product/ProductItemType';
+import axios, { isAxiosError } from 'axios';
+import { useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
+
+
+
+
+// import React, { useState } from 'react';
+// import { FaStar } from 'react-icons/fa';
+// import { Button } from '../../components';
+// import { IoCheckmarkSharp } from 'react-icons/io5';
+// import { IoIosCheckmarkCircle } from 'react-icons/io';
+// import { HiDotsHorizontal } from 'react-icons/hi';
+// import productReviews from '../../utils/productReviews';
+// import { ProductDetailType } from '@/features/product/ProductItemType';
 
 interface ProductDetailProps {
   product: ProductDetailType;
@@ -31,7 +47,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
       type === 'increment' ? prevQuantity + 1 : Math.max(1, prevQuantity - 1)
     );
   };
-
+  if (!product) {
+    return <p>Loading...</p>; // Or a fallback UI
+  }
   return (
     <div className="m-6">
       <div className="w-full flex flex-col lg:flex-row space-x-4">
@@ -196,3 +214,30 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 };
 
 export default ProductDetail;
+
+
+
+
+
+
+
+// const token=Cookies.get('access')
+//   useEffect(()=>{
+//     const fetchDetails=async()=>{
+//       try {
+//         const response = await axios.get(`https://shop-co-backend-nine.vercel.app/api/product/${id}`,{
+//           headers:{
+//             'Authorization':`Bearer ${token}`
+//           }
+//         });
+//         setProductDetails(response.data)
+//         console.log(response)
+//       } catch (error) {
+//         if(isAxiosError(error)){
+//           toast.error( error.response?.data?.message||"Error occured while fetching details of the product")
+//         }
+//         console.error(error)
+//       }
+//     }
+//     fetchDetails()
+//   },[])

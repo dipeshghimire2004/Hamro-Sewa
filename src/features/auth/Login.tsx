@@ -6,8 +6,7 @@ import { Input, Button } from '../../components/index';  // Assuming you have In
 import axios from 'axios';
 import toast,{Toaster} from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from '@reduxjs/toolkit';
-import { useDispatch, UseDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {login} from './authSlice'
 import Cookies from 'js-cookie'
 import Breadcrumb from '../../components/Breadcrumb';
@@ -43,7 +42,9 @@ const Login: React.FC = () => {
       // if(response.status==200){
         if(response.data){
           console.log(response.data.data)
+
         const token=response.data?.data.token;
+        console.log(token)
         if(token){
           Cookies.set('access', token, {expires:7, sameSite:'Lax',})
           console.log('Token set in cookies:', token);

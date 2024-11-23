@@ -36,7 +36,8 @@ const HomePage: React.FC = () => {
   ]
 
   return (
-    <div className="w-360 flex flex-wrap justify-center items-center dark:bg-gray-950 dark:text-white bg-[#F2F0F1] text-black">
+    <div className="w-360 flex flex-wrap justify-center items-center
+ dark:bg-gray-950 dark:text-white bg-[#F2F0F1] text-black">
       {/* Left Section - Text Content */}
       <div className="w-full md:w-full lg:w-1/2 p-6 md:p-12 space-y-6">
         <div className="m-4 space-y-8">
@@ -81,10 +82,10 @@ const HomePage: React.FC = () => {
           className="max-w-full h-auto w-1/2"
         />
       </div>
-      <div className='w-full h-28 top-[797px] flex items-center justify-center grid grid-cols-3 md:grid-cols-5 bg-black text-white text-2xl  lg:mt-0'>
+      <div className='w-full h-28 top-[797px] flex flex-wrap items-center justify-evenly  bg-black text-white text-2xl  lg:mt-0'>
         {brandsImages.map((brand) => (
-          <div key={brand.id}>
-            <img src={brand.image} alt={`Brand ${brand.id}`} className="h-8 w-auto object-contain" />
+          <div key={brand.id} >
+            <img src={brand.image} alt={`Brand ${brand.id}`} className="h-6 lg:h-8 w-auto object-contain" />
           </div>
         ))}
       </div>

@@ -5,7 +5,6 @@ interface ProductCardProps {
   id?:number;
   image_url: string;
   name: string;
-  // description: string;
   price: number; // Original Price (before discount)
   discounted_price: number; // Discounted Price
   discount: number; // Discount Percentage
@@ -13,10 +12,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  // id,
   image_url,
   name,
-  // description,
   price=0,
   discounted_price=0,
   discount=0,
@@ -25,13 +22,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const formattedPrice = price.toFixed(2);
   const formattedDiscountedPrice = discounted_price.toFixed(2);
   return (
-    <div className="max-w-xs  bg-white rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out m-4">
-      
-      <img
-        className="w-full h-72 object-cover rounded-t-lg"
-        src={image_url}
-        alt={name}
-      />
+    <div className="max-w-xs  hover:shadow-lg hover:rounded-md transition duration-300 ease-in-out m-4">
+      <div className='flex justify-center items-center'>
+        <img
+          className="h-[298px] w-[298px] bg-[#F0EEED] object-cover rounded-lg"
+          src={image_url}
+          alt={name}
+        />
+
+      </div>
       <div className="p-4">
         <h3 className="text-[20px] font-bold  text-gray-800">{name}</h3>
         {/* <p className="hidden text-gray-600 mt-2">{description}</p> */}

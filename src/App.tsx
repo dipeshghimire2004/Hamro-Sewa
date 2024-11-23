@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 import ProductDetail from './features/product/ProductDetails';
 import Cart from './features/cart/Cart';
 import Product from './pages/Product';
-
+import CategoryPage from './pages/CategoryPage';
 const App:React.FC=()=> {
   
 
@@ -34,6 +34,8 @@ const App:React.FC=()=> {
       <Route path='/yourcart' element={<Cart/>}/>
 
       <Route path='/productform' element={<Product/>}/>
+      
+      <Route path='/categorypage' element={<CategoryPage/>}/>
     </Routes>
     </main>
     

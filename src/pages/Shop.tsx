@@ -1,9 +1,12 @@
-import React from 'react'
 import { FC } from 'react'
+import Breadcrumb from "../components/Breadcrumb";
 
 const Shop:FC = () => {
   return (
-    <div>Shop</div>
+    <div>
+      <Breadcrumb/>
+      <p>Shop</p>
+    </div>
   )
 }
 

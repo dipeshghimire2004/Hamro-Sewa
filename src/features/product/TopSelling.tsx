@@ -70,9 +70,9 @@ const TopSelling: FC = () => {
   const displayAll = showAllProducts ? products : products.slice(0, 4);
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-24">
       <h1 className="flex justify-center items-center font-bold text-4xl">TOP SELLING</h1>
-      <div className="mx-4 mt-4 grid grid-cols-2 lg:grid-cols-4">
+      <div className="mx-4 sm:mt-4 lg:mt-12 grid grid-cols-2 lg:grid-cols-4">
         {displayAll.map((product) => (
           <ProductCard
             key={product.id}

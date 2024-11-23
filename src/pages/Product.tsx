@@ -21,7 +21,7 @@ interface ProductItems{
 
 const Product:React.FC = () => {
     const {register,handleSubmit, formState:{errors}, setValue }=useForm<ProductItems>();
-
+    <Toaster/>
     const onSubmit: SubmitHandler<ProductItems>=async (data)=>{
         try {
             const response= await axios.post("https://shop-co-backend-nine.vercel.app/api/product",

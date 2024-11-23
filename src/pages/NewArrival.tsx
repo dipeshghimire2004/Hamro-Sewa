@@ -5,8 +5,8 @@ import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 import ProductCard from '../components/ProductCard';
 import { ProductListType } from '../features/product/ProductItemType';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import Breadcrumb from "../components/Breadcrumb";
 // interface NewArrivalProduct {
 //   id: number;
 //   name: string;
@@ -74,19 +74,22 @@ const NewArrival: FC = () => {
   const displayAll = showAllProducts ? products : products.slice(0, 4);
 
   return (
-    <div className="w-full">
+    <div className="w-full sm:mt-4 lg:mt-24">
+      <Breadcrumb/>
       <h1 className="flex justify-center items-center font-bold text-4xl">NEW ARRIVALS</h1>
-      <div className="mx-4 mt-4 grid grid-cols-2 lg:grid-cols-4">
+      <div className="mx-4  sm:mt-4 lg:mt-12 grid grid-cols-2 lg:grid-cols-4">
         {displayAll.map((product) => (
-          <ProductCard
-            key={product.id}
-            name={product.name}
-            price={product.price}
-            image_url={product.image_url}
-            discount={product.discount}
-            discounted_price={product.discounted_price}
-            rating={product.rating}
-          />
+          <Link to={`/product/${product.id}`}>
+            <ProductCard
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              image_url={product.image_url}
+              discount={product.discount}
+              discounted_price={product.discounted_price}
+              rating={product.rating}
+            />
+          </Link>
         ))}
       </div>
       <div className="flex justify-center">

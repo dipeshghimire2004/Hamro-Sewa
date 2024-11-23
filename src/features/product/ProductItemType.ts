@@ -5,7 +5,7 @@ export interface ProductListType {
   price: number;
   discounted_price: number;
   description: string;
-  image_url: string[];
+  image_url: string;
   rating: number;
   discount: number;
 }
