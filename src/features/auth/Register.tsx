@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 
+
 const Register: React.FC = () => {
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)

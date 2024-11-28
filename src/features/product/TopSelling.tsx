@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 import ProductCard from '../../components/ProductCard';
 import { ProductListType } from './ProductItemType';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import Product from '@/pages/Product';
 
 
@@ -74,6 +74,7 @@ const TopSelling: FC = () => {
       <h1 className="flex justify-center items-center font-bold text-4xl">TOP SELLING</h1>
       <div className="mx-4 sm:mt-4 lg:mt-12 grid grid-cols-2 lg:grid-cols-4">
         {displayAll.map((product) => (
+          <Link to={`/product/${product.id}`}>
           <ProductCard
             key={product.id}
             name={product.name}
@@ -83,6 +84,7 @@ const TopSelling: FC = () => {
             discounted_price={product.discounted_price}
             rating={product.rating}
           />
+          </Link>
         ))}
       </div>
       <div className="flex justify-center mt-9">

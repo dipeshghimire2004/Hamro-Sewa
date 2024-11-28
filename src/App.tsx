@@ -13,6 +13,9 @@ import ProductDetail from './features/product/ProductDetails';
 import Cart from './features/cart/Cart';
 import Product from './pages/Product';
 import CategoryPage from './pages/CategoryPage';
+import ReviewFom from './features/product/ReviewFom';
+
+
 const App:React.FC=()=> {
   
 
@@ -34,6 +37,7 @@ const App:React.FC=()=> {
       <Route path='/yourcart' element={<Cart/>}/>
 
       <Route path='/productform' element={<Product/>}/>
+      <Route path='/reviewform' element={<ReviewFom/>}/>
       
       <Route path='/categorypage' element={<CategoryPage/>}/>
     </Routes>
