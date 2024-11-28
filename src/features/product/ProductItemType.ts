@@ -32,9 +32,10 @@ export interface ProductDetailType {
 
 
 export interface productReviewType{
-  id:number;
+  id?:number;
+  product_id:number;
   rating:Float32Array;
-  username:string;
+  username?:string;
   comment:string;
   user_id:string;
 }

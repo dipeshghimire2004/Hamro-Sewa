@@ -6,10 +6,14 @@ import { Input, Button } from '../../components/index';  // Assuming you have In
 import axios from 'axios';
 import toast,{Toaster} from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+// import { useDispatch} from 'react-redux';
+import { useAppDispatch } from '@/store/Hooks';
 import {login} from './authSlice'
 import Cookies from 'js-cookie'
 import Breadcrumb from '../../components/Breadcrumb';
+// import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+
 
 type FormInputs = {
   email: string;
@@ -19,14 +23,14 @@ type FormInputs = {
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate=useNavigate();
-  const dispatch=useDispatch();
+  const dispatch=useAppDispatch();
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> =async (data:FormInputs) => {
     // const {email, password}=data;
@@ -38,25 +42,26 @@ const Login: React.FC = () => {
         },
         // withCredentials:true,
       },)
-      console.log(response.data)
-      // if(response.status==200){
-        if(response.data){
-          console.log(response.data.data)
+     
+          const token=response.data?.data.token;
+          const decodeToken:{id:string; email:string} = jwtDecode(token);
+        
+        dispatch(
+          login({
+            userData:{
+              id:decodeToken.id,
+              email: decodeToken.email,
+            },
+            accessToken: token,
+          })
+        )
 
-        const token=response.data?.data.token;
-        console.log(token)
-        if(token){
-          Cookies.set('access', token, {expires:7, sameSite:'Lax',})
-          console.log('Token set in cookies:', token);
-        }
         toast.success("Login successfully!!")
-          dispatch(login(response.data))
           setTimeout(()=>{
             navigate('/', {replace:true})
           })
-       
       }
-    } catch (error) {
+    catch (error) {
       if(axios.isAxiosError(error)){
         toast.error(error.response?.data?.message || " Network Connection, Please try again!");
       }

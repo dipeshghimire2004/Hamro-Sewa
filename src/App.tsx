@@ -6,7 +6,8 @@ import NewArrival from './pages/NewArrival';
 import Brands from './pages/Brands';
 import Shop from './pages/Shop';
 import Home from './pages/Home';
-import Login from './features/auth/Login';
+// import Login from './features/auth/Login';
+import Login from './pages/Login';
 import Register from './features/auth/Register';
 import Footer from './components/Footer';
 import ProductDetail from './features/product/ProductDetails';
@@ -37,7 +38,7 @@ const App:React.FC=()=> {
       <Route path='/yourcart' element={<Cart/>}/>
 
       <Route path='/productform' element={<Product/>}/>
-      <Route path='/reviewform' element={<ReviewFom/>}/>
+      <Route path='/reviewform/:id' element={<ReviewFom/>}/>
       
       <Route path='/categorypage' element={<CategoryPage/>}/>
     </Routes>

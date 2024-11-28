@@ -85,8 +85,15 @@ const ProductDetails: React.FC = () => {
   useEffect(() => {
     const fetchProductReviews = async () => {
       try {
+        const token = Cookies.get('access');
         const response = await axios.get<ApiResponse<ReviewType[]>>(
-          `https://shop-co-backend-nine.vercel.app/api/product/review/${id}`
+          // `https://shop-co-backend-nine.vercel.app/api/product/review/${id}`,{
+            `https://shop-co-backend-nine.vercel.app/api/product/review`,{
+            
+            headers:{
+              'Authorization':`Bearer ${token}`
+            }
+          }
         );
 
         if (response.status === 200) {
@@ -123,7 +130,7 @@ const ProductDetails: React.FC = () => {
         <div>
           <div className="w-full flex flex-col lg:flex-row space-x-4">
             <div className="w-full lg:w-1/2 flex flex-col lg:flex-row space-x-4">
-              <div className="w-full h-44 mt-4 lg:w-40">
+              <div className="w-full lg:h-44 mt-4 lg:w-40">
                 <img
                   src={productDetails.image_url}
                   alt={productDetails.name}
@@ -222,7 +229,7 @@ const ProductDetails: React.FC = () => {
                   <option value="popular">Popular</option>
                   <option value="oldest">Oldest</option>
                 </select>
-                <Button onClick={()=>navigate('/reviewform')} bgColor="bg-black" textColor="text-white">
+                <Button onClick={()=>navigate(`/reviewform/${productDetails.id}`)} bgColor="bg-black" textColor="text-white">
                   Write a Review
                 </Button>
               </div>
